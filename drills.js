@@ -130,5 +130,29 @@ const solver = function (maze, position = 0, row, column, direction = 'S', path)
 
 
 
-solver(mySmallMaze, 0, 0, 0, 'S', []);
+// solver(mySmallMaze, 0, 0, 0, 'S', []);
 
+
+
+//pseudocode
+// e + anagram(ast)
+// a + anagram(st)
+// s + anagram(t)
+
+const anagram = function(prefix, string){
+
+  if(string.length <= 1){
+    console.log(`The anagram is ${prefix}${string}`);
+  } else {
+    for (let i = 0; i < string.length; i++){
+      const firstLetter = string[i];
+      // const remaining = string.slice(0, i) + anagram(string.slice(i + 1));
+      const remaining = string.slice(0, i) + string.slice(i + 1);
+      const third = firstLetter + anagram(remaining);
+
+      console.log(third);
+    }
+  }
+};
+
+anagram('abc');
