@@ -39,28 +39,96 @@ const reverseStr = function (string) {
 
 // console.log(reverseStr('recursion'));
 
+const nthNumber = function (n) {
 
-let mySmallMaze = [
-  [' ', ' ', ' '],
-  [' ', '*', ' '],
-  [' ', ' ', 'e']
-];
+  if (n === 1) {
+    return n;
+  }
 
+  return n + nthNumber(n - 1);
 
-
-const maze = function (array) {
-  const exit = array[array.length - 1][array.length - 1];
-  const start = array[0][0];
-
-  
-
-  return { exit, start };
 }
 
-const array = [
-  ['S', 'R', 'R'],
-  ['D', '*', 'D'],
-  ['D', 'R', 'e']
-]
+// console.log(nthNumber(4));
 
-console.log(maze(array))
+const splitter = function (string, separator) {
+
+  if (string === '') {
+    return '';
+  }
+
+  const char = string[0];
+  if (char !== separator) {
+    return char + splitter(string.slice(1), separator);
+  } else {
+    return '' + splitter(string.slice(1), separator);
+  }
+
+}
+
+// console.log(splitter('recur/si/on', '/'));
+
+const fibonacci = function (num) {
+  if (num < 2) {
+    return num;
+  }
+
+  return fibonacci(num - 1) + fibonacci(num - 2);
+}
+
+// console.log(fibonacci(7));
+
+const factorial = function (int) {
+  if (int === 1) {
+    return int;
+  }
+
+  return int * factorial(int - 1);
+}
+
+// console.log(factorial(5));
+
+
+
+
+
+let mySmallMaze = [
+  ['S', ' ', ' '],
+  [' ', '*', ' '],
+  [' ', ' ', 'E']
+];
+
+const printer = function (path, start, end) {
+  console.log('Found path', path);
+};
+
+const solver = function (maze, position = 0, row, column, direction = 'S', path) {
+  if (column < 0 || row < 0) {
+    return;
+  }
+
+  if (column >= maze[0].length || row >= maze.length) {
+    return;
+  }
+
+  path[position] = direction;
+  position++;
+  if (maze[row][column] === 'E') {
+    printer(path);
+    return;
+  }
+  if (maze[row][column] === ' ') {
+    maze[row][column] = 'x';
+    solver(maze, position, row, column - 1, 'L', path);
+    solver(maze, position, row - 1, column, 'U', path);
+    solver(maze, position, row, column + 1, 'R', path);
+    solver(maze, position, row + 1, column, 'D', path);
+  }
+
+  position--;
+};
+
+
+
+solver(mySmallMaze, 0, 0, 0, 'S', []);
+
